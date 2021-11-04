@@ -7,12 +7,22 @@ validation_dir = 'cats_and_dogs_small/validation/'
 
 # Create the data generators (each should be an instance of ImageDataGenerator)
 # Rescale all images from the [0...255] range to the [0...1] range
-train_datagen = None # TODO: Student
-test_datagen = None # TODO: Student
+# TODO: Student
+train_datagen = ImageDataGenerator()
+test_datagen = ImageDataGenerator()
 
 # Call flow_from_directory on each of your datagen objects
-train_generator = None  # TODO: Student
-validation_generator = None  # TODO: Student
+# TODO: Student
+train_generator = train_datagen.flow_from_directory(train_dir,
+                        target_size = (150, 150),
+                        class_mode = 'binary',
+                        batch_size = 20
+                        )
+validation_generator = test_datagen.flow_from_directory(validation_dir,
+                        target_size = (150, 150),
+                        class_mode = 'binary',
+                        batch_size = 20
+                        )
 
 # Usage Example:
 for data_batch, labels_batch in train_generator:
