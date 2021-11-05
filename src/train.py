@@ -5,7 +5,7 @@ from models.basic_model import model
 from preprocess import train_generator, validation_generator
 
 # Train the model defined in basic_model.py
-history = None  # TODO make a call to model.fit_generator
+history = model.fit_generator(train_generator, 100, 30, validation_data=validation_generator, validation_steps=50)  # TODO make a call to model.fit_generator
 
 # Save the model weights
 # Change the name of this file to avoid overwriting previously trained models

@@ -7,22 +7,24 @@ model = models.Sequential()
 # add more layers to the model...
 
 # CNN: 7x7[](maybe)
-# Add a conv layer
-model.add(layers.Conv2D(input_shape=(20, 150, 150, 3), activation='relu', filters=2, kernel_size=7))
 
 # Add a maxpooling layer
-model.add(layers.MaxPooling2D(input_shape=(20, 150, 150, 3), pool_size=(7, 7)))
-
-
+# Add a conv layer
+input_shape = (20, 150, 150, 3)
+model.add(layers.Conv2D(input_shape=input_shape[1:], activation='relu', filters=16, kernel_size=11))    # 140
+# Add a maxpool
+model.add(layers.MaxPooling2D(pool_size=2))     # 70
+model.add(layers.MaxPooling2D(pool_size=2))     # 35
+model.add(layers.MaxPooling2D(pool_size=5))     # 7
 # Add a single flattened layer
 model.add(layers.Flatten())
 
 # Add a hidden densely connected layer
-model.add(layers.Dense(activation='relu'))
+model.add(layers.Dense(units=16, activation='relu'))
 
 # Add a final densely connected layer
-model.add(layers.Dense(activation='sigmoid'))
-
+model.add(layers.Dense(units=1, activation='sigmoid'))
+model.summary()
 
 # Then, call model.compile()
 model.compile(
