@@ -3,9 +3,10 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import os
 
-conv_base = None # TODO: Student - Load the VGG16 model (see writeup)
-datagen = None   # TODO: Student - create a data generator  (see part 3)
-batch_size = 0   # TODO: Student define a batch size (see writeup)
+conv_base = VGG16(weights='imagenet', include_top=False, input_shape=(150, 150, 3))
+conv_base.summary()
+datagen = ImageDataGenerator(rescale= 1./255)   # TODO: Student - create a data generator  (see part 3)
+batch_size = 20   # TODO: Student define a batch size (see writeup)
 
 base_dir = 'cats_and_dogs_small'
 train_dir = os.path.join(base_dir, 'train')
@@ -26,7 +27,10 @@ def extract_features(directory, sample_count):
     labels = np.zeros(shape=(sample_count))
 
     # Initialize a generator (call flow_from_directory)
-    generator = None # TODO: Student: call flow_from_directory as in Part 3
+    generator = datagen.flow_from_directory(directory,
+                        target_size=(150, 150),
+                        class_mode='binary',
+                        batch_size=20) # TODO: Student: call flow_from_directory as in Part 3
         
     # Iterate over the generator and extract features and labels
     i = 0
@@ -39,11 +43,22 @@ def extract_features(directory, sample_count):
             break
     return features, labels
 
+
 # TODO: Student - call extract_features() for each directory to retrieve the features and labels for the images in that directory
-train_features, train_labels = None
+sample_size = 2000
+train_features, train_labels = extract_features(train_dir, sample_size)
+validation_features, validation_labels = extract_features(validation_dir, sample_size)
+test_features, test_labels = extract_features(test_dir, sample_size)
 
 # TODO Student - flatten the features for use in a fully connected network network (for each directory)
-# train_features = np.reshape(train_features, (2000, 4 * 4 * 512))
+train_features = np.reshape(train_features, (2000, 4 * 4 * 512))
+validation_features = np.reshape(validation_features, (2000, 4 * 4 * 512))
+test_features = np.reshape(test_features, (2000, 4 * 4 * 512))
 
 # TODO: Student - save each to a file to load in train_feature_extraction.py
-# np.save("results/train_features.npy", train_features)
+np.save("results/train_features.npy", train_features)
+np.save("results/train_labels.npy", train_labels)
+np.save("results/validation_features.npy", validation_features)
+np.save("results/validation_labels.npy", validation_labels)
+np.save("results/test_features.npy", test_features)
+np.save("results/test_labels.npy", test_labels)

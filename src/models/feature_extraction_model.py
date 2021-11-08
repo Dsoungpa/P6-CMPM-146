@@ -4,7 +4,6 @@ from tensorflow.keras import optimizers
 
 # Define a sequential model here
 model = models.Sequential()
-# add more layers to the model...
 
 # Then, call model.compile()
 model.compile(

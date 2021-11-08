@@ -1,0 +1,4 @@
+P6- Accuracy and Loss of Best Feature Extraction Model
+
+Epoch 30/30
+100/100 [==============================] - 1s 9ms/step - loss: 6.7635e-04 - acc: 1.0000 - val_loss: 0.6015 - val_acc: 0.8980

@@ -14,7 +14,21 @@ test_labels = np.load("results/test_labels.npy")
 # Train the classifier from the features
 model = models.Sequential()
 # TODO Student - define the model architecture
+input_shape = train_features.shape
 
+# Add a hidden densely connected layer
+model.add(layers.Dense(input_shape=input_shape, units=64, activation='relu'))
+model.add(layers.Dropout(rate=0.1))
+model.add(layers.Dense(units=64, activation='relu'))
+# Add a final densely connected layer
+model.add(layers.Dense(units=1, activation='sigmoid'))
+model.summary()
+
+model.compile(
+    loss='binary_crossentropy',
+    optimizer=optimizers.RMSprop(lr=1e-4),
+    metrics=['acc']
+)
 history = model.fit(
     train_features,
     train_labels,
@@ -23,6 +37,7 @@ history = model.fit(
     validation_data=(validation_features, validation_labels)
 )
 
+model.save('feature_extraction.h5')
 # Plot the results
 import matplotlib.pyplot as plt
 
